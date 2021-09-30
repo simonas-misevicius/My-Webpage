@@ -8,5 +8,28 @@
     <div id='root'>bla</div>
     <!--<script src='bundle.js'></script>-->
 	<script src='bundle.js'></script>
+
+  
+  <!--<script type='text/babel'>
+  function updateValue(value){
+  document.getElementById("lname1").value = value;
+  }
+  
+  function MakeInput(){
+  var [repeat,repeater] = React.useState('empty');
+  return <>
+  <input type="text" id="lname1" name="lname1" onInput={event => repeater(event.target.value)} />
+  <br></br>
+  <p>{repeat}</p>
+  <input type="text" id="lname1" name="lname1" value={repeat} readOnly />
+  </>;
+  }
+  
+  
+  
+  
+	ReactDOM.render(<MakeInput/>,
+  document.getElementById('root'));
+	  </script>-->
   </body>
 </html>

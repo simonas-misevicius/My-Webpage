@@ -1,0 +1,5 @@
+
+uses webpaqck to make bundle. uses command
+npx webpack --mode development
+
+react-router react-router-dom
