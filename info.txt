@@ -1,7 +1,3 @@
-# Showcase of my web programming skills
-
-## About used libraries
-
 project started with:
 create-react-app
 
