@@ -25,3 +25,6 @@ also using prettier extension in my editor vscode
 testtin:
 jest comes with create-react-app
 enzyme for DOM manipulation
+
+css:
+react-bootstrap

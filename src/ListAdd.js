@@ -2,7 +2,9 @@ import { useState } from "react";
 
 export default function MyForm({ addToList = (f) => f }) {
   const sendValues = () => {
-    addToList(num, name);
+    if (num != "" && name != "") {
+      addToList(num, name);
+    }
   };
   const [num, changeNum] = useState("");
   const [name, changename] = useState("");
@@ -16,7 +18,6 @@ export default function MyForm({ addToList = (f) => f }) {
         }}
         type="number"
         placeholder="123"
-        required
       />
       <input
         id="textInput"
@@ -25,12 +26,12 @@ export default function MyForm({ addToList = (f) => f }) {
           changename(event.target.value);
         }}
         type="text"
-        pattern="[a-zA-Z]*"
-        required
+        placeholder="abc"
       />
       <button id="addButton" onClick={sendValues}>
         ADD
       </button>
+      {num == "" || name == "" ? <p>Missing input</p> : null}
     </>
   );
 }

@@ -1,18 +1,20 @@
-import MyForm from "./MyForm";
+import ListAdd from "./ListAdd";
 import { useState } from "react";
-import MyRow from "./MyRow";
-//import "./Form.css";
+import ListRow from "./ListRow";
+import { Container, Row, Col } from "react-bootstrap";
 
 export default function MyList({ data }) {
   const [values, setValues] = useState(data);
+  const [seachText, setSearch] = useState("");
+
   const addToList = (num, name) => {
     const newValues = [...values, { name: name, number: num }];
     setValues(newValues);
   };
   const removeFromList = (e) => {
-    const removeId = e.target.dataset.remove;
+    const removeId = parseInt(e.target.dataset.remove);
     const newValues = values.filter((element, index) => {
-      return index != removeId;
+      return index !== removeId;
     });
     setValues(newValues);
   };
@@ -25,39 +27,41 @@ export default function MyList({ data }) {
     ];
     setValues(newValues);
   };
-  const SortName = () => {
+  const SortByName = () => {
     const newValues = values.slice(0).sort((first, second) => {
       return first.name.localeCompare(second.name);
     });
     setValues(newValues);
   };
-  const [seachText, setSearch] = useState("");
-  const SearchFilter = (e) => {
-    const filter = e.target.value;
-    setSearch(filter);
-  };
   return (
-    <>
-      Search
-      <input
-        id="filter"
-        value={seachText}
-        onChange={SearchFilter}
-        type="text"
-      />
-      <div>
-        <MyForm addToList={addToList} />
-      </div>
-      <button id="sort" onClick={SortName}>
-        Sort by name
-      </button>
-      <div>
+    <Container>
+      <Row>
+        <Col>
+          Search
+          <input
+            id="filter"
+            value={seachText}
+            onChange={(e) => setSearch(e.target.value)}
+            type="text"
+          />
+        </Col>
+        <Col lg={6}>
+          <ListAdd addToList={addToList} />
+        </Col>
+        <Col>
+          <button id="sort" onClick={SortByName}>
+            Sort by name
+          </button>
+        </Col>
+      </Row>
+      <br />
+      <div /*class="d-flex justify-content-center"*/>
         <ul>
           {values.map((item, i) => {
-            if (seachText == "" || item.name.startsWith(seachText))
+            if (seachText === "" || item.name.startsWith(seachText)) {
               return (
                 <li key={i}>
-                  <MyRow
+                  <ListRow
                     item={item}
                     rowId={i}
                     removeFromList={removeFromList}
@@ -65,13 +69,16 @@ export default function MyList({ data }) {
                   />
                 </li>
               );
+            } else {
+              return null;
+            }
           })}
         </ul>
       </div>
       <br />{" "}
-      <div id="sum">
+      <h4 id="sum">
         Sum is {values.reduce((prev, curr) => prev + parseInt(curr.number), 0)}
-      </div>
-    </>
+      </h4>
+    </Container>
   );
 }

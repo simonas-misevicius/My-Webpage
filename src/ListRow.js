@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-export default function MyRow({ item, rowId, removeFromList, editList }) {
+export default function ListRow({ item, rowId, removeFromList, editList }) {
   //console.log(rowId);
   const [num, changeNum] = useState(item.number);
   const [name, changename] = useState(item.name);
@@ -9,8 +9,10 @@ export default function MyRow({ item, rowId, removeFromList, editList }) {
     changename(item.name);
   }, [item]);
   const edit = (e) => {
-    const id = e.target.dataset.edit;
-    editList(id, name, num);
+    if (num !== "" && name !== "") {
+      const id = e.target.dataset.edit;
+      editList(id, name, num);
+    }
   };
   return (
     <>
@@ -21,8 +23,6 @@ export default function MyRow({ item, rowId, removeFromList, editList }) {
           changeNum(event.target.value);
         }}
         type="number"
-        placeholder="123"
-        required
       />
       <input
         id="textEdit"
@@ -31,8 +31,6 @@ export default function MyRow({ item, rowId, removeFromList, editList }) {
           changename(event.target.value);
         }}
         type="text"
-        pattern="[a-zA-Z]*"
-        required
       />
       <button id="deleteButton" data-remove={rowId} onClick={removeFromList}>
         Delete
@@ -40,6 +38,7 @@ export default function MyRow({ item, rowId, removeFromList, editList }) {
       <button id="editButton" data-edit={rowId} onClick={edit}>
         Edit
       </button>
+      {num === "" || name === "" ? <p>Missing input</p> : null}
     </>
   );
 }
