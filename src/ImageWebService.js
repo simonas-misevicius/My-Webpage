@@ -6,7 +6,7 @@ export default function ImageWS() {
   const [imageData, setImageData] = useState();
   const axios = require("axios");
   const request = (amount, func) => {
-    var str = "http://localhost:5000/api/Images/1/";
+    var str = "https://simonasrest.azurewebsites.net/api/Images/1/";
     if (amount == null) {
       str = str + func;
     } else {
