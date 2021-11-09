@@ -31,3 +31,7 @@ react-bootstrap
 
 web api calls:
 axios
+
+Spinner while fetching:
+react-promise-tracker
+react-spinners

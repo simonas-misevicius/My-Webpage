@@ -1,9 +1,12 @@
 import WSInput from "./ImageWebServiceInput";
 import { useState, useEffect } from "react";
-import { Container, Row } from "react-bootstrap";
+import { Container } from "react-bootstrap";
+import { usePromiseTracker, trackPromise } from "react-promise-tracker";
+import { ClipLoader } from "react-spinners";
 
 export default function ImageWS() {
   const [imageData, setImageData] = useState();
+  const { promiseInProgress } = usePromiseTracker();
   const axios = require("axios");
   const request = (amount, func) => {
     var str = "https://simonasrest.azurewebsites.net/api/Images/1/";
@@ -12,15 +15,17 @@ export default function ImageWS() {
     } else {
       str = str + func + "/" + amount.toString();
     }
-    axios
-      .get(str)
-      .then(function (response) {
-        //console.log(response.data);
-        setImageData(response.data.imageBytes);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    trackPromise(
+      axios
+        .get(str)
+        .then(function (response) {
+          //console.log(response.data);
+          setImageData(response.data.imageBytes);
+        })
+        .catch(function (error) {
+          console.log(error);
+        })
+    );
   };
   useEffect(() => {
     request(null, "Reset");
@@ -33,6 +38,7 @@ export default function ImageWS() {
         functions.
       </h1>
       {imageData == null ? null : <img src={imageSrc} alt="Example"></img>}
+      {promiseInProgress === true ? <ClipLoader /> : null}
       <br />
       <WSInput request={request} name="Brightness" />
       <br />
