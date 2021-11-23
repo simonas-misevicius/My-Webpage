@@ -35,3 +35,7 @@ axios
 Spinner while fetching:
 react-promise-tracker
 react-spinners
+
+working with apollo server:
+@apollo/client
+graphql
