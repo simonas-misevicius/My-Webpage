@@ -2,6 +2,7 @@ import { Route, Switch, Link } from "react-router-dom";
 import Home from "./Home";
 import MyList from "./MyList";
 import ImageWebService from "./ImageWebService";
+import ServerlessDB from "./ServerlessDB";
 import { Nav } from "react-bootstrap";
 
 function App() {
@@ -27,6 +28,11 @@ function App() {
             Consume Web Service
           </Nav.Link>
         </Nav.Item>
+        <Nav.Item>
+          <Nav.Link eventKey="link-4" as={Link} to="/serverless">
+            Serverless DB
+          </Nav.Link>
+        </Nav.Item>
       </Nav>
       <br />
       <Switch>
@@ -38,6 +44,9 @@ function App() {
         </Route>
         <Route path="/webservice">
           <ImageWebService />
+        </Route>
+        <Route path="/serverless">
+          <ServerlessDB />
         </Route>
       </Switch>
     </>

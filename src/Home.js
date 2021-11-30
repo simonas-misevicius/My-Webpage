@@ -1,19 +1,7 @@
 import React from "react";
 import { Container, Row } from "react-bootstrap";
-import { useQuery, gql } from "@apollo/client";
-
-const GET_UPPERS = gql`
-  query {
-    uppers {
-      name
-    }
-  }
-`;
 
 export default function Home() {
-  const { loading, error, data } = useQuery(GET_UPPERS);
-
-  console.log(data);
   return (
     <Container>
       <Row>
@@ -27,13 +15,6 @@ export default function Home() {
           Click links at the top of the page to see different small programs.
         </h2>
       </Row>
-      {loading ? (
-        <p>Loading...</p>
-      ) : error ? (
-        <p>Error </p>
-      ) : (
-        <div>data: {data.uppers[0].name}</div>
-      )}
     </Container>
   );
 }
