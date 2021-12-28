@@ -1,12 +1,14 @@
 import { useMutation, gql } from "@apollo/client";
+import { useEffect } from "react";
+import { Container, Row, Col } from "react-bootstrap";
 
 export default function SDBRow({
   rowData,
   mutationString,
-  Row,
+  MyRow,
   upperName,
   upperId,
-  callEditList,
+  EditRow,
   checkData,
 }) {
   const DELETE = gql(mutationString);
@@ -16,16 +18,26 @@ export default function SDBRow({
     mutateFunction({ variables: { id: rowData.id } });
   };
   const passEditRow = () => {
-    callEditList(rowData, upperName, upperId);
+    EditRow(rowData, upperName, upperId);
   };
-  if (data) {
-    checkData(data);
-  }
+  useEffect(() => {
+    if (data) {
+      checkData(data);
+    }
+  });
   return (
     <div>
-      <Row rowData={rowData} upperName={upperName} />
-      <button onClick={removeItem}>Remove item</button>
-      <button onClick={passEditRow}>Edit item</button>
+      <Row>
+        <Col>
+          <MyRow rowData={rowData} upperName={upperName} />
+        </Col>
+        <Col>
+          <button onClick={removeItem}>Remove item</button>
+        </Col>
+        <Col>
+          <button onClick={passEditRow}>Edit item</button>
+        </Col>
+      </Row>
     </div>
   );
 }

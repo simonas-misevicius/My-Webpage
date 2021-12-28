@@ -1,10 +1,16 @@
-export default function SDBEdit({ EditList, rowInfo, refetch, Edit, uppers }) {
+export default function SDBEdit({
+  ReturnToList,
+  rowInfo,
+  refetch,
+  Edit,
+  uppers,
+}) {
   const cancelEdit = () => {
-    EditList(0, null, null);
+    ReturnToList(0, null, null);
   };
   const handlesuccess = () => {
     refetch();
-    EditList(0, null, null);
+    ReturnToList(0, null, null);
   };
   return (
     <>

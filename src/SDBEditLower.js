@@ -18,7 +18,7 @@ export default function SDBEditLower({ rowInfo, handlesuccess, uppers }) {
     label: rowInfo.upperName,
   });
 
-  const options = uppers.map((item, i) => {
+  const selectionOptions = uppers.map((item, i) => {
     return { value: item.id, label: item.name };
   });
   useEffect(() => {
@@ -53,7 +53,7 @@ export default function SDBEditLower({ rowInfo, handlesuccess, uppers }) {
       <Select
         defaultValue={selectionId}
         onChange={setSelectionId}
-        options={options}
+        options={selectionOptions}
       />
     </>
   );

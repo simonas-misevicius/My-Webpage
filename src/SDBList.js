@@ -2,32 +2,40 @@ import SDBEdit from "./SDBEdit";
 import { useState } from "react";
 
 export default function SDBList({ data, List, refetch, Edit }) {
-  const [editSwitch, setEditSwitch] = useState({
-    state: 0,
+  const [rowInfo, setRowInfo] = useState({
+    showEdit: 0,
     name: null,
     id: null,
     upperName: null,
     upperId: null,
   });
-  const EditList = (state, name, id, upperName = null, upperId = null) => {
-    setEditSwitch({
-      state: state,
+  const SwitchBetweenListAndEdit = (
+    showEdit,
+    name,
+    id,
+    upperName = null,
+    upperId = null
+  ) => {
+    setRowInfo({
+      showEdit: showEdit,
       name: name,
       id: id,
       upperName: upperName,
       upperId: upperId,
     });
   };
-  if (editSwitch.state == 1) {
+  if (rowInfo.showEdit == 1) {
     return (
       <SDBEdit
-        EditList={EditList}
-        rowInfo={editSwitch}
+        ReturnToList={SwitchBetweenListAndEdit}
+        rowInfo={rowInfo}
         refetch={refetch}
         Edit={Edit}
         uppers={data.uppers}
       />
     );
   }
-  return <List data={data} EditList={EditList} refetch={refetch} />;
+  return (
+    <List data={data} EditRow={SwitchBetweenListAndEdit} refetch={refetch} />
+  );
 }

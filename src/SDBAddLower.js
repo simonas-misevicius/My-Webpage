@@ -1,6 +1,7 @@
 import { useMutation, gql } from "@apollo/client";
 import { useState } from "react";
 import Select from "react-select";
+import { useAlert } from "react-alert";
 
 const INSERT_LOWER = gql`
   mutation Mutation($name: String!, $keyId: ID!) {
@@ -14,12 +15,13 @@ export default function SDBAddLower({ uppers, refetch }) {
   const [mutateFunction, { data, loading, error }] = useMutation(INSERT_LOWER);
   const [selectionId, setSelectionId] = useState("");
   const [newName, changename] = useState("");
+  const alert = useAlert();
 
-  const options = uppers.map((item, i) => {
-    return { value: item.id, label: item.name };
-  });
-  if (data) {
-    refetch();
+  let selectionOptions;
+  if (uppers != null) {
+    selectionOptions = uppers.map((item, i) => {
+      return { value: item.id, label: item.name };
+    });
   }
   return (
     <>
@@ -28,7 +30,13 @@ export default function SDBAddLower({ uppers, refetch }) {
           e.preventDefault();
           mutateFunction({
             variables: { name: newName, keyId: selectionId.value },
-          });
+          })
+            .then(({ data }) => {
+              refetch();
+            })
+            .catch((e) => {
+              alert.error("Missing input!");
+            });
         }}
       >
         <input
@@ -39,12 +47,12 @@ export default function SDBAddLower({ uppers, refetch }) {
           type="text"
         />
         <button type="submit">Add lower</button>
+        <Select
+          defaultValue={selectionId}
+          onChange={setSelectionId}
+          options={selectionOptions}
+        />
       </form>
-      <Select
-        defaultValue={selectionId}
-        onChange={setSelectionId}
-        options={options}
-      />
     </>
   );
 }

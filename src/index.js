@@ -5,6 +5,17 @@ import reportWebVitals from "./reportWebVitals";
 import { HashRouter } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { ApolloProvider, ApolloClient, InMemoryCache } from "@apollo/client";
+import { transitions, positions, Provider as AlertProvider } from "react-alert";
+import AlertTemplate from "react-alert-template-basic";
+
+const options = {
+  // you can also just use 'bottom center'
+  position: positions.BOTTOM_CENTER,
+  timeout: 5000,
+  offset: "30px",
+  // you can also just use 'scale'
+  transition: transitions.SCALE,
+};
 
 const client = new ApolloClient({
   uri: "https://0jl96uttif.execute-api.us-east-1.amazonaws.com/dev/graphql",
@@ -15,7 +26,9 @@ ReactDOM.render(
   <React.StrictMode>
     <HashRouter>
       <ApolloProvider client={client}>
-        <App />
+        <AlertProvider template={AlertTemplate} {...options}>
+          <App />
+        </AlertProvider>
       </ApolloProvider>
     </HashRouter>
   </React.StrictMode>,

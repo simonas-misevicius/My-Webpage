@@ -1,4 +1,4 @@
-import { useQuery, useMutation, gql, NetworkStatus } from "@apollo/client";
+import { useQuery, gql, NetworkStatus } from "@apollo/client";
 import { Container, Row, Col } from "react-bootstrap";
 import SDBList from "./SDBList";
 import SDBListLowers from "./SDBListLowers";
@@ -32,7 +32,7 @@ export default function ServerlessDB() {
   );
 
   if (networkStatus === NetworkStatus.refetch) {
-    return "Refetching!";
+    return <p>Refetching...</p>;
   } else if (loading) {
     return <p>Loading...</p>;
   } else if (error) {
@@ -49,27 +49,29 @@ export default function ServerlessDB() {
               <SDBAddLower uppers={data.uppers} refetch={refetch} />
             </Col>
           </Row>
-          <Row>
-            <Col>
-              <SDBList
-                data={data}
-                List={SDBListUpper}
-                refetch={refetch}
-                Edit={SDBEditUpper}
-              />
-            </Col>
-            <Col>
-              <SDBList
-                data={data}
-                List={SDBListLowers}
-                refetch={refetch}
-                Edit={SDBEditLower}
-              />
-            </Col>
-          </Row>
+          <br />
+          {data.uppers != null ? (
+            <Row>
+              <Col>
+                <SDBList
+                  data={data}
+                  List={SDBListUpper}
+                  refetch={refetch}
+                  Edit={SDBEditUpper}
+                />
+              </Col>
+              <Col>
+                <SDBList
+                  data={data}
+                  List={SDBListLowers}
+                  refetch={refetch}
+                  Edit={SDBEditLower}
+                />
+              </Col>
+            </Row>
+          ) : null}
         </Container>
       </>
     );
   }
 }
-//<button onClick={() => refetch()}>Refresh</button>

@@ -8,9 +8,9 @@ mutation Mutation($id: ID!) {
   }
 }`;
 
-export default function SDBListLowers({ data, EditList, refetch }) {
-  const callEditList = (rowData, upperName, upperId) => {
-    EditList(1, rowData.namel, rowData.id, upperName, upperId);
+export default function SDBListLowers({ data, EditRow, refetch }) {
+  const callEditRow = (rowData, upperName, upperId) => {
+    EditRow(1, rowData.namel, rowData.id, upperName, upperId);
   };
   const checkData = (data) => {
     if (data.removeLower.success) {
@@ -27,10 +27,10 @@ export default function SDBListLowers({ data, EditList, refetch }) {
                 <SDBRow
                   rowData={lowerItem}
                   mutationString={mutationString}
-                  Row={SDBRowLower}
+                  MyRow={SDBRowLower}
                   upperName={item.name}
                   upperId={item.id}
-                  callEditList={callEditList}
+                  EditRow={callEditRow}
                   checkData={checkData}
                 />
               </li>

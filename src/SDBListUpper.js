@@ -1,5 +1,6 @@
 import SDBRow from "./SDBRow";
 import SDBRowUpper from "./SDBRowUpper";
+import { useAlert } from "react-alert";
 
 const mutationString = `
 mutation Mutation($id: ID!) {
@@ -8,13 +9,17 @@ mutation Mutation($id: ID!) {
   }
 }`;
 
-export default function SDBListUpper({ data, EditList, refetch }) {
-  const callEditList = (rowData) => {
-    EditList(1, rowData.name, rowData.id);
+export default function SDBListUpper({ data, EditRow, refetch }) {
+  const alert = useAlert();
+
+  const callEditRow = (rowData) => {
+    EditRow(1, rowData.name, rowData.id);
   };
   const checkData = (data) => {
     if (data.removeUpper.success) {
       refetch();
+    } else {
+      alert.show("Remove lowers first");
     }
   };
   return (
@@ -26,8 +31,8 @@ export default function SDBListUpper({ data, EditList, refetch }) {
               <SDBRow
                 rowData={item}
                 mutationString={mutationString}
-                Row={SDBRowUpper}
-                callEditList={callEditList}
+                MyRow={SDBRowUpper}
+                callEditRow={callEditRow}
                 checkData={checkData}
               />
               <ul>
@@ -47,8 +52,8 @@ export default function SDBListUpper({ data, EditList, refetch }) {
               <SDBRow
                 rowData={item}
                 mutationString={mutationString}
-                Row={SDBRowUpper}
-                callEditList={callEditList}
+                MyRow={SDBRowUpper}
+                callEditRow={callEditRow}
                 checkData={checkData}
               />
             </li>
